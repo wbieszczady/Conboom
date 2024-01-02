@@ -1,0 +1,6 @@
+fullscreen True
+vsync False
+fps_counter True
+master_volume 0.5
+width 1280
+height 720
