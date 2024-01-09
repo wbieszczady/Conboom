@@ -7,8 +7,10 @@ class Gui:
         self.level = player.level
         self.game = player.game
 
-        self.staminaFrame = pyglet.shapes.Box(100, 200, 300, 50, 1, batch=self.game.batch, group=self.game.gui, color=(255, 255, 255, 200))
-        self.staminaBar = pyglet.shapes.Rectangle(100, 200, 290, 40, batch=self.game.batch, group=self.game.gui, color=(255, 255, 255, 200))
+        bombIcon = pyglet.image.load('resources/gui/dynamiteIcon.png')
+
+        self.bombIcon = pyglet.sprite.Sprite(img=bombIcon, x=self.game.width//2-32, y=30, batch=self.game.batch, group=self.game.gui)
+        self.bombBar = pyglet.shapes.Rectangle(x=self.game.width//2-32, y=30, width=64, height=64, batch=self.game.batch, group=self.game.gui, color=(255, 255, 255, 0))
 
 class Button(pyglet.sprite.Sprite):
 

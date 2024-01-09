@@ -20,11 +20,11 @@ class LoadingScreen:
         self.percent = pyglet.text.Label('Loading Textures...', color=[255, 255, 255, 255], font_size=24, font_name='BN Machine', x=game.width // 2,
                                            y=game.height // 2 - 80, anchor_x='center', anchor_y='center', batch=game.batch)
 
-        pyglet.clock.schedule_interval(self.init_load, 1/360)
+        pyglet.clock.schedule_interval(self.init_load, 1/60)
 
     def init_load(self, dt):
 
-        self.bar.width += random.randint(700, 4000) * dt
+        self.bar.width += random.randint(0, 7000) * dt
 
         if self.bar.width >= self.maxWidth-6:
             pyglet.clock.unschedule(self.init_load)
@@ -206,6 +206,7 @@ class Singleplayer:
 
         self.objects = []
         self.crates = []
+        self.powerups = []
         self.create_map()
 
         self.spawn_player(64, 64)
@@ -226,7 +227,6 @@ class Singleplayer:
                     c = Crate(self, xpos, ypos)
                     self.objects.append(c)
                     self.crates.append(c)
-
 
     def spawn_explosion(self, x, y):
         e = Explosion(self, x, y)

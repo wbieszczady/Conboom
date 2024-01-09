@@ -10,6 +10,8 @@ class Texture:
                     'border': pyglet.image.load('resources/game/border.png'),
                     'playground': pyglet.image.load('resources/game/playground.png'),
                     'crate': pyglet.image.load('resources/game/crate.png'),
+                    'speed': pyglet.image.load('resources/game/speed.png'),
+                    'force': pyglet.image.load('resources/game/force.png'),
 
                     'dynamite': pyglet.image.load('resources/player/dynamite.png'),
                     'explosion': pyglet.image.Animation.from_image_sequence(pyglet.image.ImageGrid(pyglet.image.load('resources/player/explosion.png'), rows=1, columns=11), duration=0.05),

@@ -15,8 +15,8 @@ class Player(pyglet.sprite.Sprite):
 
         #gui
         self.gui = Gui(self)
-        self.staminaMax = self.gui.staminaBar.width
-        self.stamina = self.staminaMax
+        self.bombMax = self.gui.bombBar.width
+        self.bomb = self.bombMax
 
         #textures
         self.textures = self.game.textures.all
@@ -28,9 +28,11 @@ class Player(pyglet.sprite.Sprite):
 
         #bomb cooldown
         self.ready = True
-        self.i = 150
+        self.bombMax = self.gui.bombBar.width
+        self.bomb = self.bombMax
 
         self.speed = 130
+        self.force = 4
 
         super().__init__(img=self.texture, batch=level.game.batch, group=level.game.foreground, x=x, y=y)
         pyglet.clock.schedule_interval(self.update, 1/60)
@@ -77,15 +79,17 @@ class Player(pyglet.sprite.Sprite):
         self.game.set_camera(self.offset[0], self.offset[1])
 
         if self.keys[key.SPACE] and self.ready:
-            Dynamite(self, cooldown=20, force=4)
+            Dynamite(self, cooldown=20, force=self.force)
             self.ready = False
             pyglet.clock.schedule_interval(self.cooldown, 1/60)
 
     def cooldown(self, dt):
-        self.i -= 100 * dt
-        if self.i < 0:
+        self.gui.bombBar.width -= 100 * dt
+        self.gui.bombBar.color = (255, 255, 255, 100)
+        if self.gui.bombBar.width < 0:
             self.ready = True
-            self.i = 100
+            self.gui.bombBar.color = (255, 255, 255, 0)
+            self.gui.bombBar.width = self.bombMax
             pyglet.clock.unschedule(self.cooldown)
 
     def animate(self, direction):
@@ -121,6 +125,18 @@ class Player(pyglet.sprite.Sprite):
         for obst in self.level.objects:
             if self.x+16 < obst.x + obst.width and self.x+16 + self.width-32 > obst.x and self.y < obst.y + obst.height and self.y + (self.height//3) > obst.y:
                 self.bounce(side, dt)
+
+        for power in self.level.powerups:
+            if self.x+16 < power.x + power.width and self.x+16 + self.width-32 > power.x and self.y < power.y + power.height and self.y + (self.height//3) > power.y:
+
+                if power.type == 'speed':
+                    self.speed += 10
+                if power.type == 'force':
+                    self.force += 1
+
+                self.level.powerups.remove(power)
+                power.delete()
+
 
     def die(self):
         pyglet.clock.unschedule(self.update)

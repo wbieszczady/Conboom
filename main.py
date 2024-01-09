@@ -108,10 +108,10 @@ class Game(pyglet.window.Window):
 
     def game_gui(self, x, y):
         if self.singleplayer:
-            self.singleplayer.player.gui.staminaFrame.x = -x+self.width-310
-            self.singleplayer.player.gui.staminaFrame.y = -y+10
-            self.singleplayer.player.gui.staminaBar.x = -x+self.width-305
-            self.singleplayer.player.gui.staminaBar.y = -y+15
+            self.singleplayer.player.gui.bombIcon.x = -x+self.width//2-32
+            self.singleplayer.player.gui.bombIcon.y = -y+30
+            self.singleplayer.player.gui.bombBar.x = -x+self.width//2-32
+            self.singleplayer.player.gui.bombBar.y = -y+30
 
 if __name__ == "__main__":
     app = Game()
